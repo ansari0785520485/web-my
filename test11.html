@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic Tac Toe with Background Image</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-image: url(c:\Users\ehsan\Desktop\images.jfif);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .game-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .game-cell {
+      width: 100px;
+      height: 100px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 48px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="game-board">
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+      <div class="game-cell"></div>
+    </div>
+  </div>
+
+  <script>
+    const cells = document.querySelectorAll('.game-cell');
+    let currentPlayer = 'X';
+
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        if (cell.textContent === '') {
+          cell.textContent = currentPlayer;
+          checkWin();
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+      });
+    });
+
+    function checkWin() {
+      const winningCombos = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+
+      for (let combo of winningCombos) {
+        if (
+          cells[combo[0]].textContent === currentPlayer &&
+          cells[combo[1]].textContent === currentPlayer &&
+          cells[combo[2]].textContent === currentPlayer
+        ) {
+          alert(`Player ${currentPlayer} wins!`);
+          resetGame();
+          break;
+        }
+      }
+    }
+
+    function resetGame() {
+      cells.forEach(cell => {
+        cell.textContent = '';
+      });
+      currentPlayer = 'X';
+    }
+  </script>
+</body>
+</html>
